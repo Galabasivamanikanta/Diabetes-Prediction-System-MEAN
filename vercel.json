@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "name": "diabetes-prediction-system",
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/frontend/browser"
+      }
+    },
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/predict_ml.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/predict_ml",
+      "dest": "api/predict_ml.py"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/(polyfills|main|runtime|styles|vendor|main-.*|polyfills-.*|runtime-.*|styles-.*).js",
+      "dest": "frontend/$1.js"
+    },
+    {
+      "src": "/(styles|styles-.*).css",
+      "dest": "frontend/$1.css"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/index.html"
+    }
+  ]
+}

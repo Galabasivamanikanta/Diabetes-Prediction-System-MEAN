@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.angular/
+.vercel/
+.env
+.DS_Store
+*.log
+ml-model/__pycache__/
+ml-model/*.pyc
+frontend/node_modules/
+backend/node_modules/
+frontend/.angular/
+backend/.env

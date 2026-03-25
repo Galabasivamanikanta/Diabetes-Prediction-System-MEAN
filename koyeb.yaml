@@ -1,0 +1,22 @@
+name: diabetes-portal
+services:
+  - name: clinical-api
+    type: web
+    ports:
+      - port: 5001
+        protocol: http
+    routes:
+      - path: /
+        port: 5001
+    regions:
+      - fra # Europe (Frankfurt) is usually the best free region
+    instance_type: free
+    build:
+      type: docker
+      dockerfile: Dockerfile
+    env:
+      - key: PORT
+        value: "5001"
+      - key: NODE_ENV
+        value: "production"
+      # IMPORTANT: YOU MUST ADD MONGODB_URI AND JWT_SECRET MANUALLY IN THE KOYEB DASHBOARD!

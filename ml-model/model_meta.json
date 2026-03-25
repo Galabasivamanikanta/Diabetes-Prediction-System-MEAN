@@ -1,0 +1,17 @@
+{
+  "model_name": "LogisticRegression",
+  "accuracy": 0.7013,
+  "cv_accuracy": 0.7722,
+  "features": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "lr_accuracy": 0.7013,
+  "rf_accuracy": 0.7532
+}

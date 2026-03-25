@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: diabetespredictor
+    env: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # Set in Render Dashboard
+      - key: JWT_SECRET
+        sync: false # Set in Render Dashboard
+      - key: STATIC_PATH
+        value: /app/public
+    healthCheckPath: /api/health
+    autoDeploy: true

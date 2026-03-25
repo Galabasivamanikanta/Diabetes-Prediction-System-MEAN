@@ -1,0 +1,11 @@
+frontend/node_modules
+backend/node_modules
+frontend/dist
+.git
+.vercel
+node_modules
+npm-debug.log
+Dockerfile
+.dockerignore
+render.yaml
+koyeb.yaml
