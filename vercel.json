@@ -7,32 +7,12 @@
       "use": "@vercel/static-build",
       "config": { "distDir": "dist/frontend/browser" }
     },
-    {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/predict_ml.py",
-      "use": "@vercel/python"
-    }
+    { "src": "backend/server.js", "use": "@vercel/node" },
+    { "src": "api/predict_ml.py", "use": "@vercel/python" }
   ],
-  "routes": [
-    {
-      "src": "/api/predict_ml",
-      "dest": "api/predict_ml.py"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/$1",
-      "continue": true
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/index.html"
-    }
+  "rewrites": [
+    { "source": "/api/predict_ml", "destination": "/api/predict_ml.py" },
+    { "source": "/api/(.*)", "destination": "/backend/server.js" },
+    { "source": "/(.*)", "destination": "/frontend/$1" }
   ]
 }
