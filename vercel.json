@@ -1,6 +1,15 @@
 {
   "version": 2,
   "name": "diabetes-prediction-system",
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist/frontend/browser" }
+    },
+    { "src": "backend/server.js", "use": "@vercel/node" },
+    { "src": "api/predict_ml.py", "use": "@vercel/python" }
+  ],
   "rewrites": [
     { "source": "/api/predict_ml", "destination": "/api/predict_ml.py" },
     { "source": "/api/(.*)", "destination": "/backend/server.js" },
