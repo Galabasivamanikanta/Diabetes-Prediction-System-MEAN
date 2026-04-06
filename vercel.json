@@ -13,6 +13,6 @@
   "rewrites": [
     { "source": "/api/predict_ml", "destination": "/api/predict_ml.py" },
     { "source": "/api/(.*)", "destination": "/backend/server.js" },
-    { "source": "/(.*)", "destination": "/frontend/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
