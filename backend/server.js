@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const authRoutes = require('./routes/auth');
@@ -14,6 +15,7 @@ const app = express();
 // Essential Production Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // Request logging for Render
 app.use((req, res, next) => {

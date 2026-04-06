@@ -2,10 +2,18 @@
   "name": "diabetes-prediction-system",
   "version": "1.0.0",
   "private": true,
+  "author": "G. Sivamanikanta <sivamanikanta1013@gmail.com>",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
+    "build": "cd frontend && npm install && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "install-all": "npm install && cd backend && npm install && cd .. && cd frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

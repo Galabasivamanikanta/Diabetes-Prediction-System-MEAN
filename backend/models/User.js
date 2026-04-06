@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String }, // Optional for Google Auth users
+    googleId: { type: String },
+    mobileNo: { type: String }, // Added for new registration flow
     role: { type: String, enum: ['user', 'doctor', 'admin'], default: 'user' },
     age: { type: Number },
     weight: { type: Number },

@@ -61,8 +61,8 @@ import { HealthBridgeService } from './health-bridge.service';
           </div>
         </div>
 
-        <!-- Simulator -->
-        <div class="diagno-card simulator-panel">
+        <!-- Simulator (Only for Admins/Doctors) -->
+        <div class="diagno-card simulator-panel" *ngIf="isAdminOrDoctor()">
           <div class="simulator-header">
             <h3>Diagnostic "What-If" Analysis Engine</h3>
             <p class="text-muted">Adjust physiological variables to project potential risk mitigation strategies.</p>
@@ -95,8 +95,8 @@ import { HealthBridgeService } from './health-bridge.service';
         </div>
       </div>
 
-      <!-- Input Form (Clinical View) -->
-      <div class="diagno-card form-card animate-fade" *ngIf="!result">
+      <!-- Input Form (Only for Admins/Doctors) -->
+      <div class="diagno-card form-card animate-fade" *ngIf="!result && isAdminOrDoctor()">
         <div class="form-header">
           <div class="header-text">
             <h2 class="gradient-text">Laboratory Biomarker Intake</h2>
@@ -140,6 +140,17 @@ import { HealthBridgeService } from './health-bridge.service';
             <span *ngIf="loading">Clinical Processing <div class="mini-spinner"></div></span>
           </button>
         </form>
+      </div>
+
+      <!-- Restrict Message for Patients -->
+      <div class="diagno-card restrict-card animate-fade" *ngIf="!result && !isAdminOrDoctor()">
+          <div class="restrict-icon"><i class="material-icons-outlined">lock_person</i></div>
+          <h2 class="gradient-text">Clinical Assessment Portal</h2>
+          <p class="text-muted">Direct diagnostic analysis is reserved for authorized medical personnel. Your historical laboratory biomarkers and physician-reviewed reports are available in the records section.</p>
+          <div class="restrict-actions">
+            <button class="btn-primary" routerLink="/history">View My Records</button>
+            <button class="btn-secondary" (click)="notifyDoctor()">Request Doctor Review</button>
+          </div>
       </div>
     </div>
   `,
@@ -190,6 +201,13 @@ import { HealthBridgeService } from './health-bridge.service';
     .mini-spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; margin-left: 10px; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    .restrict-card { padding: 80px 40px; text-align: center; }
+    .restrict-icon { font-size: 5rem; color: var(--primary); margin-bottom: 20px; opacity: 0.8; }
+    .restrict-card h2 { margin-bottom: 15px; font-size: 2rem; font-family: var(--font-title); }
+    .restrict-card p { max-width: 600px; margin: 0 auto 30px; font-size: 1.05rem; line-height: 1.6; }
+    .restrict-actions { display: flex; gap: 15px; justify-content: center; }
+    .restrict-actions button { height: 52px; padding: 0 30px; }
+
     @media (max-width: 850px) {
       .analysis-grid, .sim-grid, .input-grid { grid-template-columns: 1fr; }
       .result-header { flex-direction: column; gap: 20px; align-items: flex-start; }
@@ -209,6 +227,15 @@ export class PredictionComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
+  
+  isAdminOrDoctor() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return false;
+    try {
+      const role = JSON.parse(userString).role;
+      return role === 'admin' || role === 'doctor';
+    } catch { return false; }
+  }
 
   onPredict() {
     this.loading = true;

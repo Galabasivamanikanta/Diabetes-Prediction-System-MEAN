@@ -6,13 +6,13 @@
 [![University](https://img.shields.io/badge/Parul%20University-CSE--AI%26ML-orange?style=for-the-badge)](https://www.paruluniversity.ac.in/)
 
 ## 🏥 Project Overview
-An industrial-grade laboratory portal designed to analyze patient biomarkers (Glucose, BMI, Insulin, etc.) and provide real-time diabetes risk assessments using a validated Scikit-Learn Random Forest model.
+An advanced, enterprise-grade **Clinical Decision Support System (CDSS)** engineered for industrial-scale laboratory screening and risk stratification. The platform serves as a specialized bridge between patient biomarkers and predictive diagnostics, utilizing a validated **Random Forest** engine to provide sub-second clinical evaluations.
 
-### 🔬 Core Features
-- **AI Diagnostics**: Instant risk level detection (Low, Moderate, High, Very High).
-- **Clinical Dashboard**: Real-time analytics for healthcare administrators.
-- **Biomarker History**: Persistent patient screening records.
-- **Alert System**: Immediate notification for critical high-risk cases.
+### 🔬 Core Clinical Pillars
+- **Enterprise Risk Analytics**: Real-time identification of Diabetic risk levels (Low to Critical) for clinical triage.
+- **Role-Based Diagnostics**: Restricted medical assessment tools for authorized clinicians, with a high-trust administrative board.
+- **Secure Clinical Auth**: Multi-layered security featuring email-based OTP verification and secure session management.
+- **Historical Biomarker Persistence**: Specialized history tracking for multi-point clinical observations and patient progress review.
 
 ## 🛠️ Technical Architecture
 - **Frontend**: Angular 17+ (Reactive Components, Chart.js)
@@ -30,8 +30,8 @@ Developed by a team of 4 specialists from **Parul University**, Department of **
 | :--- | :--- |
 | **D. Venkatasai** | Lead Developer & System Architect |
 | **M. Srikanth** | ML Engineer & Data Scientist |
-| **G. Sivamanikanta** | Full-Stack Developer |
-| **G. Avinash** | UI/UX Designer & Researcher |
+| **G. Sivamanikanta** | Full-Stack Developer | [sivamanikanta1013@gmail.com](mailto:sivamanikanta1013@gmail.com) |
+| **G. Avinash** | UI/UX Designer & Researcher | - |
 
 ---
 

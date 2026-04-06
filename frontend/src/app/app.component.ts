@@ -21,7 +21,7 @@ import { filter } from 'rxjs/operators';
 
           <div class="nav-links">
             <a routerLink="/home" routerLinkActive="active">Home</a>
-            <a routerLink="/predict" routerLinkActive="active">Diagnostics</a>
+            <a routerLink="/predict" routerLinkActive="active">{{ isAdminOrDoctor() ? 'Diagnostics' : 'Predict Risk' }}</a>
             <a routerLink="/history" routerLinkActive="active">Records</a>
             <a routerLink="/analytics" routerLinkActive="active" *ngIf="isAdminOrDoctor()">Admin Board</a>
           </div>
