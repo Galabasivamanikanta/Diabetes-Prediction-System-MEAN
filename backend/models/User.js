@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     password: { type: String }, // Optional for Google Auth users
     googleId: { type: String },
     mobileNo: { type: String }, // Added for new registration flow
-    role: { type: String, enum: ['user', 'doctor', 'admin'], default: 'user' },
+    role: { type: String, enum: ['user', 'doctor', 'admin', 'patient'], default: 'user' },
     age: { type: Number },
     weight: { type: Number },
     height: { type: Number },

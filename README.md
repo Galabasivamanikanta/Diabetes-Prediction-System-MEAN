@@ -1,50 +1,23 @@
-# 🩺 Diabetes Prediction System (MEAN Stack + Python ML)
-### *Advanced Clinical Decision Support for Predictive Risk Stratification*
+# 🩺 Diabetes Prediction System (DPS)
 
-[![Live Demo](https://img.shields.io/badge/Live-On--Render-brightgreen?style=for-the-badge)](https://diabetes-prediction-system-mean.onrender.com)
-[![Build](https://img.shields.io/badge/Build-Docker-blue?style=for-the-badge)](./Dockerfile)
-[![University](https://img.shields.io/badge/Parul%20University-CSE--AI%26ML-orange?style=for-the-badge)](https://www.paruluniversity.ac.in/)
+A comprehensive clinical platform built with the MEAN stack, integrating machine learning for accurate diabetic risk assessment.
 
-## 🏥 Project Overview
-An advanced, enterprise-grade **Clinical Decision Support System (CDSS)** engineered for industrial-scale laboratory screening and risk stratification. The platform serves as a specialized bridge between patient biomarkers and predictive diagnostics, utilizing a validated **Random Forest** engine to provide sub-second clinical evaluations.
+## 🚀 Deployed Infrastructure (Vercel Optimized)
+The system is configured for a robust, multi-tier deployment on **Vercel**:
+- **Frontend**: Angular 17+ (Professional Material Design)
+- **Backend**: Node.js & Express (Secure Clinical Logic)
+- **AI Engine**: Python (Scikit-Learn Random Forest Model)
 
-### 🔬 Core Clinical Pillars
-- **Enterprise Risk Analytics**: Real-time identification of Diabetic risk levels (Low to Critical) for clinical triage.
-- **Role-Based Diagnostics**: Restricted medical assessment tools for authorized clinicians, with a high-trust administrative board.
-- **Secure Clinical Auth**: Multi-layered security featuring email-based OTP verification and secure session management.
-- **Historical Biomarker Persistence**: Specialized history tracking for multi-point clinical observations and patient progress review.
+## 🔑 Stable Configuration
+The system is configured with high-availability credentials to prevent "fail" scenarios:
+- **Google OAuth**: Enterprise-ready Client ID for seamless login.
+- **Database**: Persistent MongoDB Atlas Cluster for clinical history storage.
 
-## 🛠️ Technical Architecture
-- **Frontend**: Angular 17+ (Reactive Components, Chart.js)
-- **Backend**: Node.js & Express (RESTful API)
-- **Database**: MongoDB Atlas (Persistent Cloud Storage)
-- **AI Engine**: Python 3.10 (Scikit-Learn, NumPy, Pandas)
-- **Deployment**: Dockerized on Render / Railway
+## 🛠️ Deployment Troubleshooting (404 Resolution)
+If you encounter a 404 error on the home URL:
+1. Ensure the **Vercel Root Directory** is set correctly.
+2. The `vercel.json` handles the SPA routing — ensure it is present in the repository root.
+3. Configure the Environment Variables (`MONGODB_URI`, `GOOGLE_CLIENT_ID`, etc.) in the Vercel dashboard.
 
 ---
-
-## 👥 The Clinical Intelligence Team
-Developed by a team of 4 specialists from **Parul University**, Department of **Computer Science and Engineering (AI & ML)**:
-
-| Name | Role |
-| :--- | :--- |
-| **D. Venkatasai** | Lead Developer & System Architect |
-| **M. Srikanth** | ML Engineer & Data Scientist |
-| **G. Sivamanikanta** | Full-Stack Developer | [sivamanikanta1013@gmail.com](mailto:sivamanikanta1013@gmail.com) |
-| **G. Avinash** | UI/UX Designer & Researcher | - |
-
----
-
-## 🚀 Deployment Guide
-This project is fully containerized. To run locally:
-```bash
-# Clone the repository
-git clone https://github.com/Galabasivamanikanta/Diabetes-Prediction-System-MEAN.git
-
-# Build and Run with Docker
-docker build -t diabetes-portal .
-docker run -p 5001:5001 diabetes-portal
-```
-
----
-*© 2026 Specialized Diabetic Analytics & Laboratory Portal. All rights reserved.*
+*Maintained by the Clinical Research Team*

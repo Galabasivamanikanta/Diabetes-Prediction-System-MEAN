@@ -28,8 +28,8 @@ app.use((req, res, next) => {
 // FIRST: Unauthenticated Health Check for Render Deployment Verification
 app.get('/api/health', (req, res) => {
     res.status(200).json({ 
-        status: 'perfect', 
-        clinical_system: 'active',
+        status: 'active', 
+        clinical_system: 'Diabetes Prediction System (DPS)',
         timestamp: new Date().toISOString()
     });
 });
@@ -66,7 +66,7 @@ app.get('*', (req, res) => {
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/diabetes_db';
 mongoose.connect(MONGODB_URI)
     .then(async () => {
-        console.log('✅ Clinical Repository established with MongoDB');
+        console.log('✅ DiagnoLabs Clinical Repository established');
         // Initial Admin Seed
         try {
             const adminEmail = 'admin@clinical.com';

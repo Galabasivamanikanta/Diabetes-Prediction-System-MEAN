@@ -1,6 +1,8 @@
 {
   "version": 2,
   "name": "diabetes-prediction-system",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "builds": [
     {
       "src": "frontend/package.json",
@@ -13,6 +15,7 @@
   "rewrites": [
     { "source": "/api/predict_ml", "destination": "/api/predict_ml.py" },
     { "source": "/api/(.*)", "destination": "/backend/server.js" },
+    { "handle": "filesystem" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
