@@ -198,7 +198,7 @@ export class AuthComponent implements OnInit {
       if (typeof google !== 'undefined') {
         clearInterval(interval);
         google.accounts.id.initialize({
-          client_id: '622141511684-oo8so5ee5i1k7hch7d1633fovmqui23t.apps.googleusercontent.com',
+          client_id: '857013288806-jvt01uap0q0qjjcoui3nci9je9emvj5d.apps.googleusercontent.com',
           callback: (res: any) => this.handleGoogleLogin(res.credential)
         });
         
