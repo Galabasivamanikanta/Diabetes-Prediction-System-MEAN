@@ -8,7 +8,8 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const predictionRoutes = require('./routes/predictions');
 const notificationRoutes = require('./routes/notifications');
-const reportRoutes = require('./routes/reports');
+const User = require('./models/User');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -63,8 +64,29 @@ app.get('*', (req, res) => {
 // Resilient MongoDB Lifecycle
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/diabetes_db';
 mongoose.connect(MONGODB_URI)
-    .then(() => {
+    .then(async () => {
         console.log('✅ Clinical Repository established with MongoDB');
+        // Initial Admin Seed
+        try {
+            const adminEmail = 'admin@clinical.com';
+            const existingAdmin = await User.findOne({ email: adminEmail });
+            if (!existingAdmin) {
+                const hashedPassword = await bcrypt.hash('AdminPortal@2026', 10);
+                const adminUser = new User({
+                    name: 'System Administrator',
+                    email: adminEmail,
+                    mobileNo: '0000000000',
+                    password: hashedPassword,
+                    role: 'admin'
+                });
+                await adminUser.save();
+                console.log('✅ Admin seed successfully created.');
+            } else {
+                console.log('✅ Admin credentials confirmed.');
+            }
+        } catch (seedErr) {
+            console.error('⚠️ Admin seed failed:', seedErr.message);
+        }
     })
     .catch(err => {
         console.error('❌ MONGODB CONNECTION FAILED:', err.message);
@@ -75,3 +97,5 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Clinical Portal fully operational on port ${PORT}`);
 });
+
+module.exports = app;

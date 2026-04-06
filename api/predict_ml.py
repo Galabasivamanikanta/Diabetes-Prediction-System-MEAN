@@ -6,8 +6,12 @@ import numpy as np
 
 # Load model and scaler once on boot
 script_dir = os.path.dirname(os.path.abspath(__file__))
-model = pickle.load(open(os.path.join(script_dir, "model.pkl"), "rb"))
-scaler = pickle.load(open(os.path.join(script_dir, "scaler.pkl"), "rb"))
+# Note: Ensure model.pkl and scaler.pkl are copied to the /api folder for Vercel
+model_path = os.path.join(script_dir, "model.pkl")
+scaler_path = os.path.join(script_dir, "scaler.pkl")
+
+model = pickle.load(open(model_path, "rb"))
+scaler = pickle.load(open(scaler_path, "rb"))
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):

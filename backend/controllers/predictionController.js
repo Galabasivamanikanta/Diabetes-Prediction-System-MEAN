@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+const axios = require('axios');
 const path = require('path');
 const Prediction = require('../models/Prediction');
 const Notification = require('../models/Notification');
@@ -9,68 +9,58 @@ const ML_MODEL_DIR = path.join(__dirname, '../../ml-model');
 exports.predict = async (req, res) => {
     try {
         const inputData = req.body;
-        const jsonInput = JSON.stringify(inputData);
-
-        const python = spawn('python3', [
-            path.join(ML_MODEL_DIR, 'predict.py'),
-            jsonInput
-        ]);
-
-        let output = '';
-        let errorOutput = '';
-
-        python.stdout.on('data', (data) => { output += data.toString(); });
-        python.stderr.on('data', (data) => { errorOutput += data.toString(); });
-
-        python.on('close', async (code) => {
-            if (code !== 0) {
-                return res.status(500).json({ msg: 'Analytical Engine error', error: errorOutput });
-            }
-
-            try {
-                const result = JSON.parse(output.trim());
-                if (result.error) return res.status(500).json({ msg: result.error });
-
-                // Save prediction to DB
-                const prediction = new Prediction({
-                    userId: req.userId,
-                    inputs: {
-                        pregnancies: inputData.pregnancies,
-                        glucose: inputData.glucose,
-                        bloodPressure: inputData.bloodPressure,
-                        skinThickness: inputData.skinThickness,
-                        insulin: inputData.insulin,
-                        bmi: inputData.bmi,
-                        dpf: inputData.dpf,
-                        age: inputData.age
-                    },
-                    result: result.result,
-                    label: result.label,
-                    probability: result.probability,
-                    riskLevel: result.riskLevel,
-                    recommendation: result.recommendation
-                });
-                await prediction.save();
-
-                // Only notify Admins about High/Very High risk screenings
-                if (result.riskLevel === 'High' || result.riskLevel === 'Very High') {
-                    const user = await User.findById(req.userId);
-                    const notification = new Notification({
-                        message: `CRITICAL ALERT: High-Risk Clinical Screening detected for ${user?.name || 'Patient'}. Immediate review requested.`,
-                        type: 'alert'
-                    });
-                    await notification.save();
-                }
-
-                res.json({ ...result, predictionId: prediction._id });
-            } catch (parseErr) {
-                res.status(500).json({ msg: 'Diagnostic parsing error', error: parseErr.message });
-            }
+        
+        // Vercel Serverless: Call Python Function via HTTP
+        const protocol = req.headers['x-forwarded-proto'] || 'http';
+        const host = req.headers.host;
+        const apiUrl = `${protocol}://${host}/api/predict_ml`;
+        
+        console.log(`[AI_BRIDGE]: Forwarding diagnostics to ${apiUrl}`);
+        
+        const response = await axios.post(apiUrl, {
+            pregnancies: inputData.pregnancies || 0,
+            glucose: inputData.glucose,
+            bloodPressure: inputData.bloodPressure,
+            skinThickness: inputData.skinThickness,
+            insulin: inputData.insulin,
+            bmi: inputData.bmi,
+            dpf: inputData.dpf || 0.44,
+            age: inputData.age
         });
 
+        const result = response.data;
+        if (result.error) return res.status(500).json({ msg: result.error });
+
+        // Save prediction to DB
+        const prediction = new Prediction({
+            userId: req.userId,
+            inputs: inputData,
+            result: result.result,
+            label: result.label,
+            probability: result.probability,
+            riskLevel: result.riskLevel,
+            recommendation: result.recommendation
+        });
+        await prediction.save();
+
+        // Critical Alert logic
+        if (result.riskLevel === 'High' || result.riskLevel === 'Very High') {
+            const user = await User.findById(req.userId);
+            const notification = new Notification({
+                message: `CRITICAL ALERT: High-Risk screening detected for ${user?.name || 'Patient'}. Immediate review requested.`,
+                type: 'alert'
+            });
+            await notification.save();
+        }
+
+        res.json({ ...result, predictionId: prediction._id });
+
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
+        console.error('[AI_BRIDGE_ERROR]:', err.message);
+        res.status(500).json({ 
+            msg: 'Clinical Analytical Engine is currently unavailable on Vercel.',
+            error: err.message 
+        });
     }
 };
 

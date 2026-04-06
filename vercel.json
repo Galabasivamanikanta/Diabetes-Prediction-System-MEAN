@@ -5,9 +5,7 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/frontend/browser"
-      }
+      "config": { "distDir": "dist/frontend/browser" }
     },
     {
       "src": "backend/server.js",
@@ -28,19 +26,13 @@
       "dest": "backend/server.js"
     },
     {
-      "src": "/(polyfills|main|runtime|styles|vendor|main-.*|polyfills-.*|runtime-.*|styles-.*).js",
-      "dest": "frontend/$1.js"
-    },
-    {
-      "src": "/(styles|styles-.*).css",
-      "dest": "frontend/$1.css"
-    },
-    {
-      "handle": "filesystem"
+      "src": "/(.*)",
+      "dest": "/frontend/$1",
+      "continue": true
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/index.html"
+      "dest": "/frontend/index.html"
     }
   ]
 }
