@@ -8,6 +8,7 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const predictionRoutes = require('./routes/predictions');
 const notificationRoutes = require('./routes/notifications');
+const reportRoutes = require('./routes/reports');
 const User = require('./models/User');
 const bcrypt = require('bcryptjs');
 
