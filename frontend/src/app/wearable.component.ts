@@ -23,14 +23,6 @@ interface NearByDevice {
           <h2 class="gradient-text">Wearable Bridge</h2>
           <p class="subtitle">{{ isHardwareMode ? 'Real-Time Hardware Discovery' : 'AI Simulation Environment' }}</p>
         </div>
-        <div class="mode-toggle">
-          <span [class.active]="!isHardwareMode">Demo</span>
-          <label class="switch">
-            <input type="checkbox" [(ngModel)]="isHardwareMode" (change)="disconnect()">
-            <span class="slider round"></span>
-          </label>
-          <span [class.active]="isHardwareMode">Hardware</span>
-        </div>
       </div>
 
       <!-- Pairing Mode -->
